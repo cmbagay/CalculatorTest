@@ -49,18 +49,22 @@ function calculateMonthlyPayment(values) {
   // mthPmt = (p * i) / (1 - (1 + i)^-n)
 
   const p = values.amount
-  const i = values.rate / 12;
-  const n = values.years / 12;
+  const i = (values.rate / 100) / 12;
+  const n = values.years * 12;
+
+  console.log("p: " + p + " i: " + i + " n: " + n);
 
   const numerator = (p * i);
-  const denominator = 1 - Math.pow(1 + i, -n);
+  const denominator = 1 - (Math.pow(1 + i, -n));
 
-  return numerator / denominator;
+  console.log("Num: " + numerator + " Denom: " + denominator);
+
+  return (numerator / denominator).toFixed(2);
 }
 
 // Given a string representing the monthly payment value,
 // update the UI to show the value.
 function updateMonthly(monthly) {
-  const monthlyUI = document.getElementById("monthly-payment");
-  monthlyUI.innerText = "$" + monthly;
+  const monthlyPayment = document.getElementById("monthly-payment");
+  monthlyPayment.innerText = "$" + monthly;
 }
